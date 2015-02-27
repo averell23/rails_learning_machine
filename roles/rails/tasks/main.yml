@@ -1,0 +1,12 @@
+---
+- name: Installing development dependencies
+  apt: pkg={{ item }} state=latest
+  with_items:
+    - libmysqld-dev
+    - sqlite3
+    - libsqlite3-dev
+- name: Installing gems into default chruby environment
+  gem: name={{ item }} state=latest executable="chruby-exec {{ default_ruby_version }} -- gem" user_install=no
+  with_items:
+    - rails
+    - mysql2

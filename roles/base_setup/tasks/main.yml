@@ -1,0 +1,28 @@
+- name: Add extra repos
+  apt_repository: repo={{ item }}
+  with_items:
+    - 'ppa:webupd8team/atom'
+    - 'ppa:webupd8team/sublime-text-2'
+
+- name: Update System
+  apt: update_cache=yes upgrade=yes
+
+- apt: pkg={{ item }} state=latest
+  with_items:
+    - vim
+    - xubuntu-desktop
+    - mysql-server
+    - emacs
+    - atom
+    - sublime-text
+
+- name: start lightdm
+  service: name=lightdm state=started
+
+- name: Install configuration preseeds
+  template: src=config.preseed
+            dest=/etc/config.preseed
+            owner=root group=root mode=0640
+  notify:
+    - debconf-selections
+
