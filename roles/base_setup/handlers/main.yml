@@ -12,6 +12,6 @@
   sudo: false
 
 - name: debconf-selections
-  shell:  debconf-set-selections /tmp/config.preseed
+  shell:  debconf-set-selections /etc/config.preseed
   notify:
     - reboot
